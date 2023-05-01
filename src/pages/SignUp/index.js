@@ -9,6 +9,18 @@ export default function SignUp(){
     const [email, setEmail] = useState('');
     const [password, setpassword] = useState('');
 
+    //função de submit
+    function handleSubmit(e){
+        //prevenir que seja carregado em outra página
+        e.preventDefault();
+
+        if(name !== '' && email !== '' && password !== ''){
+            alert('Fazendo cadastro')
+        }else{
+            alert('Preencha todos os campos!')
+        }
+    }
+
     return(
         <div className='container-center'>
             <div className='login'>
@@ -16,7 +28,7 @@ export default function SignUp(){
                     <img src={logo} alt='logo' />
                 </div>
 
-                <form>
+                <form onSubmit={handleSubmit}>
                     <h1>Realizar Cadastro</h1>
 
                     <input type='text'

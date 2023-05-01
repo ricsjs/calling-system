@@ -1,14 +1,25 @@
 import './signin.css'
 
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 import logo from '../../assets/logo.png'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../contexts/auth';
 
 export default function SignIn(){
 
     const [email, setEmail] = useState('');
     const [password, setpassword] = useState('');
+
+    const { signIn } = useContext(AuthContext)
+
+    function handleSignIn(e){
+        e.preventDefault();
+
+        if(email !== '' && password !== ''){
+            signIn(email, password);
+        }
+    }
 
     return(
         <div className='container-center'>
@@ -17,7 +28,7 @@ export default function SignIn(){
                     <img src={logo} alt='logo' />
                 </div>
 
-                <form>
+                <form onSubmit={handleSignIn}>
                     <h1>Fazer Login</h1>
                     <input type='text'
                     placeholder='email@email.com'
