@@ -94,7 +94,7 @@ function AuthProvider({ children }){
             
         })
         .catch((error) => {
-            console.log(error);
+            toast.error("Esse e-mail já está cadastrado!")
             setLoadingAuth(false);
         })
 
@@ -119,7 +119,9 @@ function AuthProvider({ children }){
             signUp,
             logout,
             loadingAuth,
-            loading
+            loading,
+            storageUser,
+            setUser
          }}>
             {children}
         </AuthContext.Provider>

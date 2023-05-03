@@ -9,13 +9,30 @@ import avatar from '../../assets/avatar.png'
 import { AuthContext } from '../../contexts/auth'
 
 import './profile.css'
+import { toast } from 'react-toastify'
 
 
 export default function Profile(){
 
-    const { user } = useContext(AuthContext);
+    const { user, storageUser, setUser, logout } = useContext(AuthContext);
 
     const [avatarUrl, setAvatarUrl] = useState(user && user.avatarUrl)
+    const [nome, setNome] = useState(user && user.nome)
+    const [email, setEmail] = useState(user && user.email)
+    const [imageAvatar, setImageAvatar] = useState(null)
+
+    function handleFile(e){
+        if(e.target.files[0]){
+            const image = e.target.files[0];
+
+            if(image.type === 'image/jpeg' || image.type === 'image/png'){
+                setImageAvatar(image)
+                setAvatarUrl(URL.createObjectURL(image))
+            }else{
+                toast.error("Envie uma imagem do tipo PNG ou JPEG")
+            }
+        }
+    }
 
     return(
         <div>
@@ -34,7 +51,7 @@ export default function Profile(){
                                 <FiUpload color='#FFF' size={25}/>
                             </span>
 
-                            <input type='file' accept='image/*'/><br/>
+                            <input type='file' accept='image/*' onChange={handleFile}/><br/>
                             {avatarUrl === null ?(
                                 <img src={avatar} alt='Foto de perfil' width={250} height={250}/>
                             ) : (
@@ -43,10 +60,10 @@ export default function Profile(){
                         </label>
 
                         <label>Nome</label>
-                        <input type='text' placeholder='Seu nome'/>
+                        <input type='text' placeholder={user.nome} onChange={ (e) => setNome(e.target.value) }/>
 
                         <label>E-mail</label>
-                        <input type='text' placeholder='email@email.com' disabled={true}/>
+                        <input type='text' value={user.email} disabled={true}/>
 
                         <button type='submit'>Salvar</button>
                     </form>
@@ -54,7 +71,7 @@ export default function Profile(){
                 </div>
 
                 <div className='container'>
-                    <button className='logout-btn'>Sair</button>
+                    <button onClick={() => logout()} className='logout-btn'>Sair</button>
                 </div>
 
             </div>
