@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard"
 
 import Private from "./Private"
 import Profile from "../pages/Profile"
+import Customers from "../pages/Customers"
 
 export default function RoutesApp(){
     return(
@@ -17,6 +18,7 @@ export default function RoutesApp(){
 
                 <Route path="/dashboard" element={<Private><Dashboard /></Private>}/>
                 <Route path="/profile" element={<Private><Profile /></Private>}/>
+                <Route path="/customers" element={<Private><Customers /></Private>}/>
             </Routes>
         </div>
     )
