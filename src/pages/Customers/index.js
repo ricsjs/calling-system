@@ -4,6 +4,11 @@ import Title from "../../components/Title"
 
 import { FiUser } from "react-icons/fi"
 
+import { addDoc, collection } from "firebase/firestore"
+import { db } from "../../services/firebaseConnection"
+
+import { toast } from "react-toastify"
+
 export default function Customers() {
 
     const [nome, setNome] = useState('')
@@ -13,6 +18,24 @@ export default function Customers() {
     async function handleRegister(e){
         e.preventDefault()
         
+        if(nome !== '' && cnpj !== '' && endereco !== ''){
+            await addDoc(collection(db, "customers"), {
+                nomeFantasia: nome,
+                cnpj: cnpj,
+                endereco: endereco
+            })
+            .then(() => {
+                toast.success("Salvo com sucesso!")
+                setNome('')
+                setCnpj('')
+                setEndereco('')
+            })
+            .catch((error) => {
+                toast.error("Erro ao salvar!")
+            })
+        }else{
+            toast.error("Preencha todos os campos!")
+        }
     }
 
     return (
