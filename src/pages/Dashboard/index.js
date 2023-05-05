@@ -112,7 +112,7 @@ export default function Dashboard(){
       <Header/>
 
       <div className="content">
-        <Title name="Chamados">
+        <Title name="Tickets">
           <FiMessageSquare size={25} />
         </Title>
 
@@ -158,9 +158,9 @@ export default function Dashboard(){
                           <button className="action" style={{ backgroundColor: '#3583f6' }}>
                             <FiSearch color='#FFF' size={17}/>
                           </button>
-                          <button className="action" style={{ backgroundColor: '#f6a935' }}>
+                          <Link to={`/new/${item.id}`} className="action" style={{ backgroundColor: '#f6a935' }}>
                             <FiEdit2 color='#FFF' size={17}/>
-                          </button>
+                          </Link>
                         </td>
                       </tr>
                     )

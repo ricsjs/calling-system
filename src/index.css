@@ -9,9 +9,9 @@ html, body, #root{
 }
 
 body{
-  background-color: #EFEFEF;
   font: 14px;
-  font-family: verdana;
+  font-family: sans-serif;
+  background-color: #EFEFEF;
 }
 
 a{
