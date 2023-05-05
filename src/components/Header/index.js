@@ -3,12 +3,18 @@ import { useContext } from 'react'
 import { AuthContext } from '../../contexts/auth'
 import { Link } from 'react-router-dom'
 
-import { FiHome, FiUser, FiSettings } from 'react-icons/fi'
+import { FiHome, FiUser, FiSettings, FiLogOut } from 'react-icons/fi'
 
 import './header.css'
 
 export default function Header(){
-    const { user } = useContext(AuthContext);
+    const { user, logout } = useContext(AuthContext);
+
+
+    async function handleLogout() {
+        await logout();
+    }
+
     return(
         <div className="sidebar">
             <div>
@@ -27,6 +33,11 @@ export default function Header(){
             <Link to='/profile'>
                 <FiSettings color='#FFF' size={24}/>
                 Perfil
+            </Link>
+
+            <Link onClick={handleLogout}>
+                <FiLogOut color='#FFF' size={24}/>
+                Sair
             </Link>
             
         </div>
