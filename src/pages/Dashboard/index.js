@@ -27,6 +27,9 @@ export default function Dashboard(){
   const [lastDocs, setLastDocs] = useState()
   const [loadingMore, setLoadingMore] = useState(false);
 
+  const [showPostModal, setShowPostModal] = useState(false);
+  const [detail, setDetail] = useState()
+
 
   useEffect(() => {
     async function loadChamados(){
@@ -88,6 +91,11 @@ export default function Dashboard(){
     const querySnapshot = await getDocs(q);
     await updateState(querySnapshot);
 
+  }
+
+  function toggleModal(item){
+    setShowPostModal(!showPostModal)
+    setDetail(item)
   }
 
 
@@ -157,9 +165,9 @@ export default function Dashboard(){
                         </td>
                         <td data-label="Cadastrado">{item.createdFormat}</td>
                         <td data-label="#">
-                          <button className="action" style={{ backgroundColor: '#3583f6' }}>
+                          <Link onClick={ () => toggleModal(item) } className="action" style={{ backgroundColor: '#3583f6' }}>
                             <FiSearch color='#FFF' size={17}/>
-                          </button>
+                          </Link>
                           <Link to={`/new/${item.id}`} className="action" style={{ backgroundColor: '#f6a935' }}>
                             <FiEdit2 color='#FFF' size={17}/>
                           </Link>
@@ -179,7 +187,12 @@ export default function Dashboard(){
 
       </div>
 
-      <Modal/>
+      {showPostModal && (
+        <Modal
+          conteudo={detail}
+          close={ () => setShowPostModal(!setShowPostModal) }
+        />
+      )}
     
     </div>
   )

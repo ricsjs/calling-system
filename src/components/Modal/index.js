@@ -1,33 +1,37 @@
 import './modal.css'
 import { FiX } from 'react-icons/fi'
 
-export default function Modal(){
-    return(
+export default function Modal({ conteudo, close }) {
+    return (
         <div className='modal'>
             <div className='container'>
-                <button className='close'>
+                <button onClick={close} className='close'>
                     <FiX size={25} color='#FFF' />
                 </button>
 
                 <main>
                     <h2>Detalhes do chamado</h2>
                     <div className='row'>
-                        <span>Cliente: <i>Cliente</i></span>
+                        <span>Cliente: <i>{conteudo.cliente}</i></span>
                     </div>
 
                     <div className='row'>
-                        <span>Assunto: <i>Suporte</i></span>
-                        <span>Cadastrado em: <i>05/05/2023</i></span>
+                        <span>Assunto: <i>{conteudo.assunto}</i></span>
+                        <span>Cadastrado em: <i>{conteudo.createdFormat}</i></span>
                     </div>
 
                     <div className='row'>
-                        <span>Status: <i>Aberto</i></span>
+                        <span>Status: <i style={{ color: "#FFF", backgroundColor: conteudo.status === 'Aberto' ? '#5cb85c' : '#999' }}>
+                                {conteudo.status}
+                            </i></span>
                     </div>
 
-                    <>
-                        <h3>Complemento</h3>
-                        <p>Aqui vai todo o Complemento do chamado Aqui vai todo o Complemento do chamado Aqui vai todo o Complemento do chamado</p>
-                    </>
+                    {conteudo.complemento !== '' && (
+                        <>
+                            <h3>Complemento</h3>
+                            <p>{conteudo.complemento}</p>
+                        </> 
+                    )}
 
                 </main>
             </div>
