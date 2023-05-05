@@ -13,6 +13,8 @@ import { format } from 'date-fns'
 
 import './dashboard.css'
 
+import Modal from '../../components/Modal'
+
 const listRef = collection(db, "chamados")
 
 export default function Dashboard(){
@@ -176,6 +178,8 @@ export default function Dashboard(){
         </>
 
       </div>
+
+      <Modal/>
     
     </div>
   )
