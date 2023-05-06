@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import Header from '../../components/Header'
 import Title from '../../components/Title'
 
 import { FiUser } from 'react-icons/fi'
+
+import {AuthContext} from '../../contexts/auth'
 
 import { db } from '../../services/firebaseConnection'
 import { addDoc, collection } from 'firebase/firestore'
@@ -10,6 +12,8 @@ import { addDoc, collection } from 'firebase/firestore'
 import { toast } from 'react-toastify'
 
 export default function Customers(){
+
+  const { user } = useContext(AuthContext);
   const [nome, setNome] = useState('')
   const [cnpj, setCnpj] = useState('')
   const [endereco, setEndereco] = useState('')
@@ -21,7 +25,8 @@ export default function Customers(){
         await addDoc(collection(db, "customers"), {
           nomeFantasia: nome,
           cnpj: cnpj,
-          endereco: endereco
+          endereco: endereco,
+          userId: user.uid
         })
         .then(() => {
           setNome('')
