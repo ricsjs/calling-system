@@ -6,7 +6,7 @@ import Title from '../../components/Title'
 import { FiPlus, FiMessageSquare, FiSearch, FiEdit2 } from 'react-icons/fi'
 
 import { Link } from 'react-router-dom'
-import { collection, getDocs, orderBy, limit, startAfter, query} from 'firebase/firestore'
+import { collection, getDocs, orderBy, limit, startAfter, query, where} from 'firebase/firestore'
 import { db } from '../../services/firebaseConnection'
 
 import { format } from 'date-fns'
@@ -18,7 +18,7 @@ import Modal from '../../components/Modal'
 const listRef = collection(db, "chamados")
 
 export default function Dashboard(){
-  const { logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const [chamados, setChamados] = useState([])
   const [loading, setLoading] = useState(true);
@@ -30,25 +30,30 @@ export default function Dashboard(){
   const [showPostModal, setShowPostModal] = useState(false);
   const [detail, setDetail] = useState()
 
+  console.log(user.uid)
 
   useEffect(() => {
-    async function loadChamados(){
-      const q = query(listRef, orderBy('created', 'desc'), limit(5));
-
-      const querySnapshot = await getDocs(q)
+    async function loadChamados() {
+      const q = query(
+        listRef,
+        orderBy('created', 'desc'),
+        where("userId", "==", user.uid),
+        limit(5)
+      );
+  
+      const querySnapshot = await getDocs(q);
       setChamados([]);
-
-      await updateState(querySnapshot)
-
+  
+      await updateState(querySnapshot);
+  
       setLoading(false);
-
     }
-
+  
     loadChamados();
-
-
-    return () => { }
-  }, [])
+  
+    return () => {}
+  }, [user.uid]); // adiciona user.uid ao array de dependências
+  
 
 
   async function updateState(querySnapshot){
